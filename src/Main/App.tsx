@@ -1,22 +1,84 @@
-import React, {useContext} from 'react';
-import {UserContext} from './lib/user-context';
-import {ThemeContextType, UserContextType} from '../types/char-forge';
-import {Button, Switch} from 'antd';
-import {ThemeContext} from './lib/theme-context';
-import {MdOutlineDarkMode, MdOutlineLightMode} from 'react-icons/md';
+import React, {useState} from 'react';
+import {Button, Layout, Menu, theme, Typography} from 'antd';
+import {MdMenu, MdMenuOpen, MdUpload} from 'react-icons/md';
+import {FaDiceD20} from 'react-icons/fa6';
+import {FaDragon, FaHome} from 'react-icons/fa';
+import {Link, Outlet} from 'react-router-dom';
+
+const { Header, Footer, Sider, Content } = Layout;
 
 export default function App() {
 
-	const { isLoggedIn, toggleLoggedIn } = useContext(UserContext) as UserContextType;
-
-	const {darkMode, toggleDarkMode, setDarkMode} = useContext(ThemeContext) as ThemeContextType;
+	const [collapsed, setCollapsed] = useState(false);
+	const {
+		token: { colorBgContainer },
+	} = theme.useToken();
 
 	return (
-		<div id={"app"} style={{backgroundColor: darkMode ? 'darkgrey' : 'white'}}>
-			<span>{isLoggedIn ? 'LoggedIn' : 'Please Log In'}</span>
-			<Button onClick={toggleLoggedIn}>Toggle</Button>
-			<Button onClick={toggleDarkMode}>Toggle Theme</Button>
-			<Switch onChange={(e) => setDarkMode(e)} checked={darkMode} checkedChildren={<MdOutlineDarkMode />} unCheckedChildren={<MdOutlineLightMode />}/>
-		</div>
+		<Layout style={{height: '100%'}}>
+			<Sider trigger={null} collapsible collapsed={collapsed}>
+				<div className="demo-logo-vertical" />
+				<Menu
+					theme="dark"
+					mode="inline"
+					defaultSelectedKeys={['0']}
+					items={[
+						{
+							key: '0',
+							icon: <Link to={'/'}><FaHome/></Link>,
+							label: 'Home',
+						},
+						{
+							key: '1',
+							icon: <Link to={'test'}><FaDiceD20/></Link>,
+							label: 'Characters',
+							children: [
+								{
+									key: '11',
+									icon: <Link to={'test'}><FaDiceD20/></Link>,
+									label: 'Create Character',
+								},
+								{
+									key: '12',
+									icon: <Link to={'test'}><FaDiceD20/></Link>,
+									label: 'Share Character',
+								},
+							]
+						},
+						{
+							key: '2',
+							icon: <FaDragon />,
+							label: 'Compendium',
+						},
+					]}
+				/>
+			</Sider>
+			<Layout>
+				<Header style={{ padding: 0, background: colorBgContainer, display: 'flex', alignItems: 'center' }}>
+					<Button
+						type="text"
+						icon={collapsed ? <MdMenu /> : <MdMenuOpen />}
+						onClick={() => setCollapsed(!collapsed)}
+						style={{
+							fontSize: '16px',
+							width: 64,
+							height: 64,
+						}}
+					/>
+					<Typography style={{fontSize: '32px', textAlign: 'center', width: '100%'}}>Char Forge</Typography>
+				</Header>
+				<Content
+					style={{
+						margin: '24px 16px',
+						padding: 24,
+						minHeight: 280,
+						background: colorBgContainer,
+					}}
+				>
+					<Outlet />
+				</Content>
+				<Footer></Footer>
+			</Layout>
+		</Layout>
 	)
 }
