@@ -4,6 +4,7 @@ import {MdMenu, MdMenuOpen, MdUpload} from 'react-icons/md';
 import {FaDiceD20} from 'react-icons/fa6';
 import {FaDragon, FaHome} from 'react-icons/fa';
 import {Link, Outlet} from 'react-router-dom';
+import {GiAncientSword} from "react-icons/gi";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -30,17 +31,17 @@ export default function App() {
 						},
 						{
 							key: '1',
-							icon: <Link to={'test'}><FaDiceD20/></Link>,
+							icon: <FaDiceD20/>,
 							label: 'Characters',
 							children: [
 								{
 									key: '11',
-									icon: <Link to={'test'}><FaDiceD20/></Link>,
+									icon: <Link to={'character'}><FaDiceD20/></Link>,
 									label: 'Create Character',
 								},
 								{
 									key: '12',
-									icon: <Link to={'test'}><FaDiceD20/></Link>,
+									icon: <Link to={'/'}><FaDiceD20/></Link>,
 									label: 'Share Character',
 								},
 							]
@@ -49,12 +50,19 @@ export default function App() {
 							key: '2',
 							icon: <FaDragon />,
 							label: 'Compendium',
+							children: [
+								{
+									key: '21',
+									icon: <Link to={'classes'}><GiAncientSword/></Link>,
+									label: 'Classes'
+								}
+							]
 						},
 					]}
 				/>
 			</Sider>
 			<Layout>
-				<Header style={{ padding: 0, background: colorBgContainer, display: 'flex', alignItems: 'center' }}>
+				<Header style={{ padding: 0, backgroundColor: 'lightgray', display: 'flex', alignItems: 'center' }}>
 					<Button
 						type="text"
 						icon={collapsed ? <MdMenu /> : <MdMenuOpen />}
@@ -72,12 +80,14 @@ export default function App() {
 						margin: '24px 16px',
 						padding: 24,
 						minHeight: 280,
-						background: colorBgContainer,
+						backgroundColor: 'lightgray',
+						height: '100%',
+						maxHeight: '100%',
+						overflowY: 'scroll',
 					}}
 				>
 					<Outlet />
 				</Content>
-				<Footer></Footer>
 			</Layout>
 		</Layout>
 	)
