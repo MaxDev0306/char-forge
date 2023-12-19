@@ -13,3 +13,8 @@ export type DndClass = {
     name: string,
 	hit_die: number
 }
+
+export type Attribute = {
+    name: string,
+    short: string,
+}
