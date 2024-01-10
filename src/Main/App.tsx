@@ -1,19 +1,16 @@
-import React, {useState} from 'react';
-import {Button, Layout, Menu, theme, Typography} from 'antd';
-import {MdMenu, MdMenuOpen, MdUpload} from 'react-icons/md';
+import {useState} from 'react';
+import {Button, Layout, Menu, Typography} from 'antd';
+import {MdMenu, MdMenuOpen} from 'react-icons/md';
 import {FaDiceD20} from 'react-icons/fa6';
 import {FaDragon, FaHome} from 'react-icons/fa';
 import {Link, Outlet} from 'react-router-dom';
 import {GiAncientSword} from "react-icons/gi";
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Sider, Content } = Layout;
 
 export default function App() {
 
 	const [collapsed, setCollapsed] = useState(false);
-	const {
-		token: { colorBgContainer },
-	} = theme.useToken();
 
 	return (
 		<Layout style={{height: '100%'}}>
