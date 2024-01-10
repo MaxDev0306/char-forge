@@ -16,5 +16,7 @@ export type DndClass = {
 
 export type Attribute = {
     name: string,
-    short: string,
+    short: AttributeShort,
 }
+
+export type AttributeShort = 'CON'|'STR'|'DEX'|'INT'|'WIS'|'CHA';
