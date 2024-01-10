@@ -1,4 +1,4 @@
-import React, {ReactNode, useEffect, useState} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import {Card, Col, Row, Skeleton} from "antd";
 
 
@@ -36,7 +36,6 @@ export default function ClassView() {
             const numOfRows = Math.floor((classes.length - overflow) / 3);
 
             for (let i = 0; i < numOfRows; i++) {
-                let count = 0;
                 grid.push(
                     <Row gutter={16}>
                         {classes.slice(3*i, 3*i+3).map((value) => (

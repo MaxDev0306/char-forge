@@ -1,5 +1,4 @@
 import {Attribute, AttributeShort} from "../../types/char-forge";
-import * as module from "module";
 
 export const Attributes: Attribute[] = [
 	{

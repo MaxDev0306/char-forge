@@ -1,17 +1,11 @@
 import {Form, Input, InputNumber, Select} from "antd";
 import {useForm} from "antd/lib/form/Form";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {ApiClass, ApiClassResult} from "../../Compendium/components/ClassView";
 import SkeletonInput from "antd/lib/skeleton/Input";
 import {Attributes, StatsMap} from "../../lib/attributes";
 import {standardArray} from "../../lib/standard-array";
 import {AttributeShort} from "../../../types/char-forge";
-
-interface Character {
-    name: string
-    class: string,
-    level: number,
-}
 export default function CreationForm() {
 
     const [form] = useForm()
@@ -24,6 +18,7 @@ export default function CreationForm() {
 
     useEffect(() => {
         if (!classes) {
+            setStatMethod('ROLL')
             fetch("https://www.dnd5eapi.co/api/classes")
                 .then(response => response.json())
                 .then((result : ApiClassResult) => {

@@ -1,4 +1,4 @@
-import React, {createContext, PropsWithChildren, useState} from 'react';
+import {createContext, PropsWithChildren, useState} from 'react';
 import {ThemeContextType} from '../../types/char-forge';
 
 export const ThemeContext = createContext<ThemeContextType|null>(null);
