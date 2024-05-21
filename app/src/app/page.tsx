@@ -8,13 +8,13 @@ import {GiAncientSword} from "react-icons/gi";
 import CreationForm from "@/app/components/CreationForm";
 import ClassView from "@/app/components/ClassView";
 
+
 const { Header, Sider, Content } = Layout;
 
 export default function App() {
 
     const [collapsed, setCollapsed] = useState(false);
     const [currentWindow, setCurrentWindow] = useState<string>()
-
     function renderWindow() {
         switch (currentWindow) {
             case 'character': {
@@ -55,7 +55,7 @@ export default function App() {
                                 },
                                 {
                                     key: '12',
-                                    icon: <a onClick={() => setCurrentWindow(undefined)}><FaDiceD20/></a>,
+                                    icon: <a onClick={() => setCurrentWindow('share')}><FaDiceD20/></a>,
                                     label: 'Share Character',
                                 },
                             ]

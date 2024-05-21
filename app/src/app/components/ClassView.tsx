@@ -47,7 +47,6 @@ export default function ClassView() {
                         ))}
                     </Row>
                 )
-
             }
         } else {
             return (

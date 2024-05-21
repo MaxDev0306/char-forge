@@ -3,27 +3,95 @@ import {Attribute} from "@/lib/types";
 export const Attributes: Attribute[] = [
 	{
 		name: 'Constitution',
-		short: 'CON'
+		short: 'CON',
+		skills: []
 	},
 	{
 		name: 'Strength',
-		short: 'STR'
+		short: 'STR',
+		skills: [
+			{
+				name: 'Athletics'
+			}
+		]
 	},
 	{
 		name: 'Dexterity',
-		short: 'DEX'
-	},
-	{
-		name: 'Wisdom',
-		short: 'WIS'
+		short: 'DEX',
+		skills: [
+			{
+				name: 'Slight of Hand'
+			},
+			{
+				name: 'Stealth'
+			},
+			{
+				name: 'Acrobatics'
+			},
+		]
 	},
 	{
 		name: 'Intelligence',
-		short: 'INT'
+		short: 'INT',
+		skills: [
+			{
+				name: 'Arcana'
+			},
+			{
+				name: 'History'
+			},
+			{
+				name: 'Investigation'
+			},
+			{
+				name: 'Nature'
+			},
+			{
+				name: 'Religion'
+			},
+		]
+	},
+	{
+		name: 'Wisdom',
+		short: 'WIS',
+		skills: [
+			{
+				name: 'Animal Handling'
+			},
+			{
+				name: 'Insight'
+			},
+			{
+				name: 'Medicine'
+			},
+			{
+				name: 'Perception'
+			},
+			{
+				name: 'Survival'
+			},
+		]
 	},
 	{
 		name: 'Charisma',
-		short: 'CHA'
+		short: 'CHA',
+		skills: [
+			{
+				name: 'Deception'
+			},
+			{
+				name: 'Intimidation'
+			},
+			{
+				name: 'Investigation'
+			},
+			{
+				name: 'Performance'
+			},
+			{
+				name: 'Persuasion'
+			},
+		]
 	},
 ];
 
