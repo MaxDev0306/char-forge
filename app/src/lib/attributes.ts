@@ -1,4 +1,4 @@
-import {Attribute, AttributeShort} from "../../types/char-forge";
+import {Attribute} from "@/lib/types";
 
 export const Attributes: Attribute[] = [
 	{
@@ -29,7 +29,7 @@ export const Attributes: Attribute[] = [
 
 
 
-export const StatsMap = new Map<AttributeShort, number>();
+export const StatsMap = new Map<string, number>();
 StatsMap.set('CON', 0);
 StatsMap.set('STR', 0);
 StatsMap.set('DEX', 0);
