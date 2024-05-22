@@ -1,0 +1,21 @@
+services:
+
+  backend:
+    build:
+      context: backend/Schule_REST
+    ports:
+      - 7013:7013
+
+  frontend:
+    build:
+      context: app
+    ports:
+      - 3000:3000
+
+  db:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MYSQL_DATABASE:
+    ports:
+      - 3306:3306

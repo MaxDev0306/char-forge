@@ -1,34 +1,23 @@
 import {Button, Checkbox, Form, Input, InputNumber, Radio, Select} from "antd";
 import {useForm} from "antd/lib/form/Form";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import SkeletonInput from "antd/lib/skeleton/Input";
-import {Attributes, StatsMap} from "@/lib/attributes";
+import {Abilities, acolyte, monk, StatsMap, woodElf} from "@/lib/attributes";
 import {standardArray} from "@/lib/standard-array";
-import {ApiClass, ApiClassResult} from "@/app/components/ClassView";
 import {FaDeleteLeft} from "react-icons/fa6";
+import {Background, Class, Race} from "@/lib/types";
 export default function CreationForm() {
 
     const [form] = useForm()
 
-    const [classes, setClasses] = useState<ApiClass[]>()
-    const [races, setRaces] = useState()
-    const [backgrounds, setBackgrounds] = useState()
+    const [classes, setClasses] = useState<Class[]>([monk])
+    const [races, setRaces] = useState<Race[]>([woodElf])
+    const [backgrounds, setBackgrounds] = useState<Background[]>([acolyte])
 
     const [statMethod, setStatMethod] = useState<'ROLL'|'STANDARD'|'CUSTOM'>("STANDARD");
     const [stats, setStats] = useState(new Map(StatsMap));
     const [proficiencies, setProficiencies] = useState<Map<string, {expertise: boolean}>>(new Map())
     const [tabs, setTabs] = useState<'BIO'|'STATS'|'INVENTORY'>()
-
-    useEffect(() => {
-        if (!classes) {
-            fetch("https://www.dnd5eapi.co/api/classes")
-                .then(response => response.json())
-                .then((result : ApiClassResult) => {
-                    setClasses(result.results);
-                })
-                .catch(error => console.log('error', error));
-        }
-    })
 
     const setStat = (number: number|null, stat: string) => {
         if (number !== null) {
@@ -106,30 +95,20 @@ export default function CreationForm() {
                                 <InputNumber max={20} min={1}/>
                             </Form.Item>
                             <Form.Item label={'Class'} required>
-                                {!classes && (
-                                    <SkeletonInput active/>
-                                )}
-                                {classes && (
-                                    <Select
-                                        style={{width: '10vw'}}
-                                        options={classes.map((item) => (
-                                            {value: item.index, label: item.name}
-                                        ))}
-                                    />
-                                )}
+                                <Select
+                                    style={{width: '10vw'}}
+                                    options={classes.map((item) => (
+                                        {value: item.id, label: item.baseClassName}
+                                    ))}
+                                />
                             </Form.Item>
                             <Form.Item label={'Subclass'} required>
-                                {!classes && (
-                                    <SkeletonInput active/>
-                                )}
-                                {classes && (
-                                    <Select
-                                        style={{width: '10vw'}}
-                                        options={classes.map((item) => (
-                                            {value: item.index, label: item.name}
-                                        ))}
-                                    />
-                                )}
+                                <Select
+                                    style={{width: '10vw'}}
+                                    options={classes.map((item) => (
+                                        {value: item.id, label: item.subClassName}
+                                    ))}
+                                />
                             </Form.Item>
                         </div>
                         <div style={{display: "flex"}}>
@@ -144,7 +123,7 @@ export default function CreationForm() {
                                     <Select
                                         style={{width: '10vw'}}
                                         options={classes.map((item) => (
-                                            {value: item.index, label: item.name}
+                                            {value: item.id, label: item.baseClassName}
                                         ))}
                                     />
                                 )}
@@ -157,7 +136,7 @@ export default function CreationForm() {
                                     <Select
                                         style={{width: '10vw'}}
                                         options={classes.map((item) => (
-                                            {value: item.index, label: item.name}
+                                            {value: item.id, label: item.baseClassName}
                                         ))}
                                     />
                                 )}
@@ -185,16 +164,16 @@ export default function CreationForm() {
                             justifyContent: "space-evenly",
                             marginTop: '5vh'
                         }}>
-                            {Attributes.map((attr) => (
-                                <div>
+                            {Abilities.map((attr) => (
+                                <div key={attr.id}>
                                     <Checkbox
-                                        value={proficiencies.has(attr.short + '_SAVE')}
-                                        onClick={() => setProficiency(!proficiencies.has(attr.short + '_SAVE'), attr.short + '_SAVE')}
+                                        value={proficiencies.has(attr.name + '_SAVE')}
+                                        onClick={() => setProficiency(!proficiencies.has(attr.name + '_SAVE'), attr.name + '_SAVE')}
                                     />
                                     <Checkbox
-                                        disabled={!proficiencies.has(attr.short + '_SAVE')}
-                                        value={proficiencies.get(attr.short + '_SAVE')?.expertise}
-                                        onClick={() => setExpertise(!proficiencies.get(attr.short + '_SAVE')?.expertise, attr.short + '_SAVE')}
+                                        disabled={!proficiencies.has(attr.name + '_SAVE')}
+                                        value={proficiencies.get(attr.name + '_SAVE')?.expertise}
+                                        onClick={() => setExpertise(!proficiencies.get(attr.name + '_SAVE')?.expertise, attr.name + '_SAVE')}
                                     />
                                 </div>
                             ))}
@@ -206,10 +185,10 @@ export default function CreationForm() {
                             justifyContent: "space-evenly",
                             marginTop: '5vh'
                         }}>
-                            {Attributes.map((attr) => (
-                                <div style={{display: "flex", alignItems: "center", flexDirection: "column"}}>
+                            {Abilities.map((attr) => (
+                                <div key={attr.id} style={{display: "flex", alignItems: "center", flexDirection: "column"}}>
                                     {statMethod === "ROLL" && (
-                                        <Button onClick={() => rollStat(attr.short)}>Roll</Button>
+                                        <Button onClick={() => rollStat(attr.name)}>Roll</Button>
                                     )}
                                     <div style={{
                                         height: '9vw',
@@ -223,10 +202,10 @@ export default function CreationForm() {
                                     }}>
                                         <span>{attr.name}</span>
                                         <div style={{justifySelf: "center", fontSize: 20, marginBottom: '3%'}}>
-                                            {stats.get(attr.short)! > 11 ? '+' : ''}
-                                            {Math.floor((stats.get(attr.short)! - 10) / 2)}
+                                            {stats.get(attr.name)! > 11 ? '+' : ''}
+                                            {Math.floor((stats.get(attr.name)! - 10) / 2)}
                                         </div>
-                                        {renderStatDisplay(attr.short)}
+                                        {renderStatDisplay(attr.name)}
                                     </div>
                                 </div>
                             ))}
@@ -238,10 +217,10 @@ export default function CreationForm() {
                             justifyContent: "space-evenly",
                             marginTop: '5vh'
                         }}>
-                            {Attributes.map((attr) => (
-                                <div>
+                            {Abilities.map((attr) => (
+                                <div key={attr.id}>
                                     {attr.skills.map((skill) => (
-                                        <div>
+                                        <div key={skill.id}>
                                             {skill.name}:
                                             <Checkbox
                                                 value={proficiencies.has(skill.name)}

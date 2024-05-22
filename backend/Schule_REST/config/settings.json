@@ -1,0 +1,13 @@
+﻿{
+  "swagger": {
+    "endpoint": "",
+    "prefix": "swagger"
+  },
+
+  "local_db": {
+    "host": "db",
+    "user": "root",
+    "database": "dungeons_and_dragons",
+    "password": "password"
+  }
+}
