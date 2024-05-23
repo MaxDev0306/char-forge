@@ -142,6 +142,10 @@ export const woodElf: Race = {
 	]
 }
 
+export const itemList: Item[] = [
+
+]
+
 export const monk: Class = {
 	"id": 4,
 	"baseClassName": "Monk",
