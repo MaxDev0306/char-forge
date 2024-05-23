@@ -39,7 +39,7 @@ export default function ClassView() {
                 grid.push(
                     <Row gutter={16}>
                         {classes.slice(3*i, 3*i+3).map((value) => (
-                            <Col span={8} style={{marginBottom: 8, marginTop: 8}}>
+                            <Col key={value.index} span={8} style={{marginBottom: 8, marginTop: 8}}>
                                 <Card title={value.name}>
 
                                 </Card>
